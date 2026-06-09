@@ -1,4 +1,20 @@
 // 3. Longest Substring Without Repeating Characters
+
+function optimizedRun(s) {
+    let longest = 0
+    let start = 0
+    let lastSeen = {}
+    for (let end = 0; end < s.length; end++) {
+        const char = s[end]
+        if (start <= lastSeen[char]) {
+            start = lastSeen[char] + 1
+        }
+        lastSeen[char] = end
+        longest = Math.max(longest, end - start + 1)
+    }
+    return longest
+}
+
 const run = (s) => {
     if (s.length === 1) return 1
     if (s.length === 0) return 0
@@ -30,4 +46,5 @@ const run = (s) => {
     return longest
 }
 
-console.log(run("pwwkew"))
+// console.log(run("pwwkew"))
+console.log(optimizedRun("pwwkew"))
