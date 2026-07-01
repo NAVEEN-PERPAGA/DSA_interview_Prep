@@ -1,31 +1,38 @@
-// 22. Generate Parentheses
+// 34. Find First and Last Position of Element in Sorted Array
 
 
-const run = (n) => {
-    const result = []
-
-    function backtrack(current, open, close) {
-        if ((open + close) === n * 2) {
-            result.push(current)
-            return
+const run = (nums, target) => {
+    let first = -1
+    let last = -1
+    if (!nums.length) return [first, last]
+    let start = 0
+    let final = nums.length - 1
+    while (start <= final) {
+        let mid = Math.floor((start + final) / 2)
+        if (target === nums[mid]) {
+            first = mid
         }
-
-        if (open < n) {
-            backtrack(current + '(', open + 1, close)
-        }
-
-        if (close < open) {
-            backtrack(current + ')', open, close + 1)
+        if (target <= nums[mid]) {
+            final = mid - 1
+        } else {
+            start = mid + 1
         }
     }
-
-    backtrack("", 0, 0)
-
-    return result
+    if (first === -1) return [first, last]
+    start = 0
+    final = nums.length - 1
+    while (start <= final) {
+        let mid = Math.floor((start + final) / 2)
+        if (target === nums[mid]) {
+            last = mid
+        }
+        if (target < nums[mid]) {
+            final = mid - 1
+        } else {
+            start = mid + 1
+        }
+    }
+    return [first, last]
 }
 
-console.log(run(3))
-
-// ()(), (())
-// 1 0, 1 1, 2 1, 2 2
-// 1 0, 2 0, 2 1, 2 2
+console.log(run([5, 7, 8, 8, 8, 8, 8, 8, 10], 8))
